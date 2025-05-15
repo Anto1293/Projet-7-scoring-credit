@@ -15,7 +15,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
-COPY model/best_model_lightgbm.pkl /model/best_model_lightgbm.pkl
+COPY best_model_lightgbm.pkl .
 
 EXPOSE 8000
 
