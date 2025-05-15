@@ -1,0 +1,55 @@
+# CI (Continuous Integration) = Tests automatiques
+# À chaque fois qu'on pushes le code => GitHub Actions vérifie qu’il fonctionne (tests, lint, etc.).
+# Cela évite de casser l’application sans s’en rendre compte.
+# CD (Continuous Deployment) = Déploiement automatique
+# Si les tests passent => déploiement automatique de la nouvelle version de l’app
+
+name: CI/CD - Tests + Déploiement Render
+# Déclenche les tests sur push ou pull_request vers main
+on:
+  push:
+    branches: [main]  # Déclenche sur un push dans la branche main
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-22.04  # Pour compatibilité avec Python 3.10
+# unbuntu= Linux (rapide, standard, gratuit chez GitHub) même si sous windows mieux 
+    steps:
+      - name: Cloner le dépôt
+        uses: actions/checkout@v3  # action standard de GitHub pour récupérer le code du dépôt version 3 ou 4
+
+      - name: Installer Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
+      - name: Clear Python Cache  # évite que GitHub re-utilise un cache corrompu ou une ancienne version
+        run: |
+         sudo rm -rf ~/.cache/pip
+         sudo apt-get clean
+
+      - name: Afficher l’environnement (debug)
+        run: |
+          python --version
+          uname -a
+
+      - name: Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lancer les tests Pytest
+        run: |
+          pytest tests/ --maxfail=2 --disable-warnings -v
+
+  deploy:
+    needs: tests          # Ne se lance que si le job "test" réussit
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Déclencher le déploiement sur Render
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+# donnes à GitHub l’adresse spéciale de Render pour dire qu'une nouvelle version a été validée => redéploiement automatique

@@ -1,0 +1,93 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.16
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: pickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 2.22.0
+model_size_bytes: 11618716
+model_uuid: 32d29cdd639446be85daf98e3759791c
+prompts: null
+run_id: 57521c414f5647de991aa5fc85d1d41e
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "CODE_GENDER", "required": true}, {"type":
+    "double", "name": "FLAG_OWN_CAR", "required": true}, {"type": "double", "name":
+    "FLAG_OWN_REALTY", "required": true}, {"type": "double", "name": "CNT_CHILDREN",
+    "required": true}, {"type": "double", "name": "AMT_INCOME_TOTAL", "required":
+    true}, {"type": "double", "name": "AMT_CREDIT", "required": true}, {"type": "double",
+    "name": "AMT_ANNUITY", "required": true}, {"type": "double", "name": "AMT_GOODS_PRICE",
+    "required": true}, {"type": "double", "name": "REGION_POPULATION_RELATIVE", "required":
+    true}, {"type": "double", "name": "CNT_FAM_MEMBERS", "required": true}, {"type":
+    "double", "name": "REGION_RATING_CLIENT_W_CITY", "required": true}, {"type": "double",
+    "name": "EXT_SOURCE_1", "required": true}, {"type": "double", "name": "EXT_SOURCE_2",
+    "required": true}, {"type": "double", "name": "EXT_SOURCE_3", "required": true},
+    {"type": "double", "name": "YEARS_BUILD_AVG", "required": true}, {"type": "double",
+    "name": "TOTALAREA_MODE", "required": true}, {"type": "double", "name": "DEF_60_CNT_SOCIAL_CIRCLE",
+    "required": true}, {"type": "double", "name": "IS_UNEMPLOYED", "required": true},
+    {"type": "double", "name": "BURO_DAYS_CREDIT_MEAN", "required": true}, {"type":
+    "double", "name": "BURO_AMT_CREDIT_SUM_MEAN", "required": true}, {"type": "double",
+    "name": "BURO_AMT_CREDIT_SUM_OVERDUE_MEAN", "required": true}, {"type": "double",
+    "name": "BURO_CREDIT_DAY_OVERDUE_MEAN", "required": true}, {"type": "double",
+    "name": "PREV_AMT_CREDIT_MAX", "required": true}, {"type": "double", "name": "PREV_AMT_APPLICATION_MEAN",
+    "required": true}, {"type": "double", "name": "PREV_APP_CREDIT_PERC_MEAN", "required":
+    true}, {"type": "double", "name": "PREV_DAYS_DECISION_MIN", "required": true},
+    {"type": "double", "name": "POS_SK_DPD_MEAN", "required": true}, {"type": "double",
+    "name": "POS_SK_DPD_DEF_MEAN", "required": true}, {"type": "double", "name": "INSTAL_PAYMENT_DIFF_MEAN",
+    "required": true}, {"type": "double", "name": "INSTAL_PAYMENT_DIFF_MAX", "required":
+    true}, {"type": "double", "name": "INSTAL_DPD_MEAN", "required": true}, {"type":
+    "double", "name": "CC_AMT_BALANCE_MEAN", "required": true}, {"type": "double",
+    "name": "CC_AMT_PAYMENT_TOTAL_CURRENT_MEAN", "required": true}, {"type": "double",
+    "name": "CC_SK_DPD_MAX", "required": true}, {"type": "double", "name": "DAYS_EMPLOYED_PERC",
+    "required": true}, {"type": "double", "name": "INCOME_PER_PERSON", "required":
+    true}, {"type": "double", "name": "ANNUITY_INCOME_PERC", "required": true}, {"type":
+    "double", "name": "PAYMENT_RATE", "required": true}, {"type": "double", "name":
+    "CREDIT_TERM", "required": true}, {"type": "double", "name": "AGE", "required":
+    true}, {"type": "double", "name": "NAME_CONTRACT_TYPE_Revolving loans", "required":
+    true}, {"type": "double", "name": "NAME_INCOME_TYPE_Commercial associate", "required":
+    true}, {"type": "double", "name": "NAME_INCOME_TYPE_Pensioner", "required": true},
+    {"type": "double", "name": "NAME_INCOME_TYPE_State servant", "required": true},
+    {"type": "double", "name": "NAME_INCOME_TYPE_Unemployed", "required": true}, {"type":
+    "double", "name": "NAME_INCOME_TYPE_Working", "required": true}, {"type": "double",
+    "name": "NAME_EDUCATION_TYPE_Higher education", "required": true}, {"type": "double",
+    "name": "NAME_EDUCATION_TYPE_Lower secondary", "required": true}, {"type": "double",
+    "name": "NAME_EDUCATION_TYPE_Secondary / secondary special", "required": true},
+    {"type": "double", "name": "NAME_FAMILY_STATUS_Married", "required": true}, {"type":
+    "double", "name": "NAME_FAMILY_STATUS_Single / not married", "required": true},
+    {"type": "double", "name": "NAME_FAMILY_STATUS_Widow", "required": true}, {"type":
+    "double", "name": "NAME_HOUSING_TYPE_House / apartment", "required": true}, {"type":
+    "double", "name": "NAME_HOUSING_TYPE_Office apartment", "required": true}, {"type":
+    "double", "name": "NAME_HOUSING_TYPE_Rented apartment", "required": true}, {"type":
+    "double", "name": "NAME_HOUSING_TYPE_With parents", "required": true}, {"type":
+    "double", "name": "SECTOR_Industry", "required": true}, {"type": "double", "name":
+    "SECTOR_Trade", "required": true}, {"type": "double", "name": "SECTOR_Transport",
+    "required": true}, {"type": "double", "name": "SECTOR_Business Entity", "required":
+    true}, {"type": "double", "name": "SECTOR_Government", "required": true}, {"type":
+    "double", "name": "SECTOR_Security", "required": true}, {"type": "double", "name":
+    "SECTOR_Services", "required": true}, {"type": "double", "name": "SECTOR_Construction",
+    "required": true}, {"type": "double", "name": "SECTOR_Medicine", "required": true},
+    {"type": "double", "name": "SECTOR_Police", "required": true}, {"type": "double",
+    "name": "SECTOR_Other", "required": true}, {"type": "double", "name": "OCCUPATION_Labor_Work",
+    "required": true}, {"type": "double", "name": "OCCUPATION_Sales_Services", "required":
+    true}, {"type": "double", "name": "OCCUPATION_Medical_Staff", "required": true},
+    {"type": "double", "name": "OCCUPATION_Security", "required": true}, {"type":
+    "double", "name": "OCCUPATION_Management_Core", "required": true}, {"type": "double",
+    "name": "OCCUPATION_Other", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-05-10 21:08:52.319167'

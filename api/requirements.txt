@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+pandas
+numpy
+joblib
+mlflow
+scikit-learn
+python-dotenv
+lightgbm
+imbalanced-learn

@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: streamlit
+    env: docker
+    plan: free
+    region: frankfurt
+    dockerContext: ./streamlit_final
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: API_URL
+        value: https://api-fastapi-mnw5.onrender.com 
+
+  - type: web
+    name: fastapi-backend
+    env: docker
+    plan: free
+    region: frankfurt
+    dockerContext: ./api
+    dockerfilePath: Dockerfile
+
+  - type: web
+    name: mlflow-tracking
+    env: docker
+    plan: free
+    region: frankfurt
+    dockerContext: ./mlflow
+    dockerfilePath: Dockerfile

@@ -1,0 +1,41 @@
+# Données brutes ou dérivées
+data/
+*.csv
+*.xlsx
+
+bdd/
+*.csv
+*.xlsx
+
+# Notebooks temporaires
+*.ipynb_checkpoints
+
+# Secrets et variables d'environnement
+.env
+
+# Environnements virtuels
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs ou sorties
+logs/
+outputs/
+
+# MLflow, modèles lourds, artefacts
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Config IDE
+.vscode/
+.idea/
+
+# Ignore tous les fichiers .pkl dans le dossier model/
+model/*.pkl
+
+# Sauf ces deux fichiers spécifiques
+!model/best_model_lgbm.pkl
+!model/metrics_lgbm.pkl

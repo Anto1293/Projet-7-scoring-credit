@@ -1,0 +1,26 @@
+name: scoring-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10.0
+  - pandas=2.2.3
+  - numpy=2.2.5
+  - matplotlib=3.10.1
+  - seaborn
+  - scikit-learn
+  - joblib
+  - shap
+  - lightgbm
+  - mlflow
+  - scipy
+  - fastapi
+  - uvicorn
+  - streamlit
+  - imbalanced-learn
+  - scikit-optimize
+  - evidently
+  - pytest
+  - pip
+  - pip:
+    - requests

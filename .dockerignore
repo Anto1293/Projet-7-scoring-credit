@@ -1,0 +1,29 @@
+# Ne pas inclure les environnements virtuels
+venv/
+.env/
+
+# Ne pas inclure les fichiers de configuration locaux
+*.env
+*.pyc
+__pycache__/
+
+# Ne pas inclure les dossiers système
+.DS_Store
+Thumbs.db
+
+# Ne pas inclure Git et autres historiques
+.git
+.gitignore
+
+# Ne pas inclure les données volumineuses
+data/
+*.csv
+*.xlsx
+*.parquet
+*.pkl
+
+# Éviter d’ajouter des notebooks
+*.ipynb
+
+# Logs
+*.log

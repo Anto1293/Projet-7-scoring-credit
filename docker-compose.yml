@@ -1,0 +1,41 @@
+services:
+
+  api:
+    build: ./api
+    ports:
+      - "8000:8000"
+    # s'assure que mlflow est lancé avant api
+    depends_on:
+      - mlflow
+    volumes:
+      - ./mlflow/artifacts:/mlflow/artifacts
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    networks: # networks: tous les services peuvent se parler entre eux (mlflow, api, streamlit) sur un réseau Docker privé appelé app-net
+      - app-net
+
+  streamlit:
+    build: ./streamlit
+    ports:
+      - "8501:8501"
+    environment:
+    - API_URL=http://api:8000
+    depends_on:
+      - api
+    networks:
+      - app-net
+
+  mlflow:
+    build: ./mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlflow/artifacts:/mlflow/artifacts   # Persistance des artefacts (modèles, etc.)
+      - ./mlflow.db:/mlflow/mlflow.db          # Persistance de la base SQLite   
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
+
