@@ -10,13 +10,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Charger le dataset une seule fois en mémoire (au démarrage de l'API)
-DATA_URL = "https://huggingface.co/datasets/Antonine93/projet7scoring/resolve/main/train.parquet"
-try:
-    df_full = pd.read_parquet(DATA_URL)
-    df_full = df_full.drop(columns=["TARGET"])  # Ne pas envoyer TARGET au client
-except Exception as e:
-    raise RuntimeError(f"Erreur de chargement du dataset : {e}")
+DATA_URL = "https://huggingface.co/datasets/Antonine93/projet7scoring/resolve/main/train_subset_with_target.parquet"
 
+# Charger un échantillon du dataset pour problème mémoire Render
+df_full = pd.read_parquet(DATA_URL).drop(columns=["TARGET"])
 
 # Vérifier si l'on utilise MLflow ou un modèle local
 USE_MLFLOW = os.getenv("USE_MLFLOW", "true").lower() == "true"
