@@ -92,8 +92,8 @@ pytest -s tests/
 Voir requirements.txt ou environment.yml
 
 ## ☁️ Déploiement cloud
-L’API est déployée sur []
-Streamlit est accessible sur []
+L’API est déployée sur [https://projet-7-scoring-credit.onrender.com]
+Streamlit est accessible sur [https://projet-7-scoring-credit-interface.onrender.com]
 
 ## 📦 Docker Compose
 docker-compose up --build
