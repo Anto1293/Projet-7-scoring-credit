@@ -9,10 +9,30 @@ API_URL = os.getenv("API_URL", "http://localhost:8000")  # valeur par défaut = 
 st.set_page_config(page_title="Scoring Crédit Client", layout="wide")
 st.title("🧾 Application de Scoring Client")
 
-df = pd.read_parquet("https://huggingface.co/datasets/Antonine93/projet7scoring/resolve/main/train.parquet")
+@st.cache_data(show_spinner=False)
+def load_data():
+    # Chargement paresseux du dataset
+    url = "https://huggingface.co/datasets/Antonine93/projet7scoring/resolve/main/train.parquet"
+    df = pd.read_parquet(url)
+    return df
 
-client_id = st.selectbox("🔍Sélectionnez un ID crédit", df["SK_ID_CURR"].sort_values().unique())
-original_data = df[df["SK_ID_CURR"] == client_id].drop(columns=["TARGET"])
+df = load_data()
+
+@st.cache_data
+def get_client_data(client_id):
+    # Extraction des données client filtrées, cache pour optimisation
+    return df[df["SK_ID_CURR"] == client_id].drop(columns=["TARGET"])
+
+client_id = st.selectbox(
+    "🔍 Sélectionnez un ID crédit",
+    options=df["SK_ID_CURR"].sort_values().unique()
+)
+
+original_data = get_client_data(client_id)
+
+# Fonction optimisée pour récupérer la valeur (utilise directement la valeur si non modifiée)
+def get_input(col_name, default_value):
+    return default_value
 
 st.markdown("### Modifiez les caractéristiques du client pour simuler un scénario")
 
