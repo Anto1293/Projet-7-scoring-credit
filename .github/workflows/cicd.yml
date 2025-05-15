@@ -8,9 +8,9 @@ name: CI/CD - Tests + Déploiement Render
 # Déclenche les tests sur push ou pull_request vers main
 on:
   push:
-    branches: [main]  # Déclenche sur un push dans la branche main
+    branches: [master]  # Déclenche sur un push dans la branche main
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   tests:
