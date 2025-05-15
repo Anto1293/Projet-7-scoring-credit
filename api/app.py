@@ -35,11 +35,17 @@ print(f"USE_MLFLOW = {USE_MLFLOW}")
 # Créer l'application FastAPI
 app = FastAPI(title="API Scoring Client", description="Prédiction de défaut client")
 
+#Ajout de la route HEAD
+@app.head("/")
+def head_root():
+    # Retourne juste les headers, sans contenu
+    return Response(status_code=200)
+
 # Route d'accueil GET /
 # GET / → retourne : {"message": "Bienvenue sur l'API de scoring client. Utilisez /score pour prédire."}
 @app.get("/")
 def root():
-    return {"message": "Bienvenue sur l'API de scoring client. Utilisez /score pour prédire."}
+    return {"message": "Bienvenue sur l'API de scoring client. Utilisez /predict pour prédire."}
 
 # Créer un schéma de données pour FastAPI (Input)
 class InputData(BaseModel):
@@ -119,7 +125,7 @@ class InputData(BaseModel):
     OCCUPATION_Other: float
 
 # Créer un endpoint POST /predict
-@app.post("/score")
+@app.post("/predict")
 
 def predict(data: InputData):
     try:

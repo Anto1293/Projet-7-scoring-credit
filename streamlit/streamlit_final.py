@@ -322,7 +322,7 @@ data_for_api.update({
 
 if st.button("🔍 Prédire la probabilité de défaut"):
      try:
-        response = requests.post(f"{API_URL}/score", json=data_for_api)
+        response = requests.post(f"{API_URL}/predict", json=data_for_api)
         response.raise_for_status()
         result = response.json()
         proba = result["proba"]
