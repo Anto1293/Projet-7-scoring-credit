@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, HTTPException
 from pydantic import BaseModel, Field, ConfigDict
 import pandas as pd
 import mlflow
@@ -8,6 +8,14 @@ import joblib
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Charger le dataset une seule fois en mémoire (au démarrage de l'API)
+DATA_URL = "https://huggingface.co/datasets/Antonine93/projet7scoring/resolve/main/train.parquet"
+try:
+    df_full = pd.read_parquet(DATA_URL)
+    df_full = df_full.drop(columns=["TARGET"])  # Ne pas envoyer TARGET au client
+except Exception as e:
+    raise RuntimeError(f"Erreur de chargement du dataset : {e}")
 
 
 # Vérifier si l'on utilise MLflow ou un modèle local
@@ -35,7 +43,7 @@ print(f"USE_MLFLOW = {USE_MLFLOW}")
 # Créer l'application FastAPI
 app = FastAPI(title="API Scoring Client", description="Prédiction de défaut client")
 
-#Ajout de la route HEAD
+# Endpoint HEAD
 @app.head("/")
 def head_root():
     # Retourne juste les headers, sans contenu
@@ -46,6 +54,23 @@ def head_root():
 @app.get("/")
 def root():
     return {"message": "Bienvenue sur l'API de scoring client. Utilisez /predict pour prédire."}
+
+
+@app.get("/client/")
+def list_client_ids():
+    """Endpoint pour accéder à la liste des ids crédits"""
+    return df_full["SK_ID_CURR"].unique().tolist()
+
+
+# Nouveau endpoint pour récupérer un client par ID
+@app.get("/client/{client_id}")
+def get_client_data(client_id: int):
+    """Endpoint pour accéder aux données d'une demande de crédit précise"""
+    filtered = df_full[df_full["SK_ID_CURR"] == client_id]
+    if filtered.empty:
+        raise HTTPException(status_code=404, detail="Client introuvable")
+    return filtered.iloc[0].to_dict()
+
 
 # Créer un schéma de données pour FastAPI (Input)
 class InputData(BaseModel):

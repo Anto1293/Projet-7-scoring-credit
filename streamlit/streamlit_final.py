@@ -9,30 +9,28 @@ API_URL = os.getenv("API_URL", "http://localhost:8000")  # valeur par défaut = 
 st.set_page_config(page_title="Scoring Crédit Client", layout="wide")
 st.title("🧾 Application de Scoring Client")
 
-@st.cache_data(show_spinner=False)
-def load_data():
-    # Chargement paresseux du dataset
-    url = "https://huggingface.co/datasets/Antonine93/projet7scoring/resolve/main/train.parquet"
-    df = pd.read_parquet(url)
-    return df
+# Charger les IDs clients depuis l'API
+@st.cache_data(show_spinner=False) # décorateur Streamlit utilisé pour cacher les chargements 
+def load_client_ids():
+    response = requests.get(f"{API_URL}/client/")
+    response.raise_for_status()
+    return response.json()  # Doit renvoyer une liste d'IDs
 
-df = load_data()
-
+# Appeler l'API pour récupérer les infos d'un client
 @st.cache_data
 def get_client_data(client_id):
-    # Extraction des données client filtrées, cache pour optimisation
-    return df[df["SK_ID_CURR"] == client_id].drop(columns=["TARGET"])
+    response = requests.get(f"{API_URL}/client/{client_id}")
+    response.raise_for_status()
+    data = response.json()
+    if "TARGET" in data:
+        del data["TARGET"]
+    return pd.DataFrame([data])  # On garde un DataFrame pour la compatibilité avec le reste du code
 
-client_id = st.selectbox(
-    "🔍 Sélectionnez un ID crédit",
-    options=df["SK_ID_CURR"].sort_values().unique()
-)
+client_ids = load_client_ids()
 
+client_id = st.selectbox("🔍 Sélectionnez un ID crédit", options=sorted(client_ids))
 original_data = get_client_data(client_id)
 
-# Fonction optimisée pour récupérer la valeur (utilise directement la valeur si non modifiée)
-def get_input(col_name, default_value):
-    return default_value
 
 st.markdown("### Modifiez les caractéristiques du client pour simuler un scénario")
 
