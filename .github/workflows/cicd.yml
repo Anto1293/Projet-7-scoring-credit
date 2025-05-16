@@ -5,10 +5,10 @@
 # Si les tests passent => déploiement automatique de la nouvelle version de l’app
 
 name: CI/CD - Tests + Déploiement Render
-# Déclenche les tests sur push ou pull_request vers main
+# Déclenche les tests sur push ou pull_request vers master
 on:
   push:
-    branches: [master]  # Déclenche sur un push dans la branche main
+    branches: [master]  # Déclenche sur un push dans la branche master
   pull_request:
     branches: [master]
 
@@ -52,4 +52,4 @@ jobs:
       - name: Déclencher le déploiement sur Render
         run: |
           curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-# donnes à GitHub l’adresse spéciale de Render pour dire qu'une nouvelle version a été validée => redéploiement automatique
+# donne à GitHub l’adresse spéciale de Render pour dire qu'une nouvelle version a été validée => redéploiement automatique
