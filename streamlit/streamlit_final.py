@@ -38,6 +38,30 @@ st.markdown("### Modifiez les caractéristiques du client pour simuler un scéna
 def get_input(col_name, input_widget):
     return input_widget if input_widget is not None else float(original_data[col_name].values[0])
 
+#Fonction pour récupérer les valeurs OHE
+def display_one_hot_selectbox(data_row, column_prefix, label):
+    """
+    Affiche un selectbox Streamlit à partir de colonnes one-hot encodées.
+
+    Args:
+        data_row (pd.Series): Une ligne du DataFrame
+        column_prefix (str): Préfixe des colonnes (ex: "NAME_FAMILY_STATUS_")
+        label (str): Libellé du selectbox
+
+    Returns:
+        str: Valeur sélectionnée
+    """
+    # Récupérer toutes les colonnes avec le préfixe
+    matching_columns = [col for col in data_row.index if col.startswith(column_prefix)]
+    # Extraire les options à afficher
+    options = [col.replace(column_prefix, "") for col in matching_columns]
+    # Trouver la valeur sélectionnée dans la ligne
+    default_col = next((col for col in matching_columns if data_row[col] == 1), None)
+    default_value = default_col.replace(column_prefix, "") if default_col else options[0]
+    # Afficher le selectbox
+    return st.selectbox(label, options=options, index=options.index(default_value))
+row = original_data.iloc[0]
+
 st.markdown("## 🧍 Informations personnelles")
 CODE_GENDER = st.radio("Sexe", [0, 1], index=int(original_data["CODE_GENDER"].values[0]), format_func=lambda x: "Femme" if x == 0 else "Homme")
 FLAG_OWN_CAR = st.radio("Possède une voiture ?", [0, 1], index=int(original_data["FLAG_OWN_CAR"].values[0]), format_func=lambda x: "Non" if x == 0 else "Oui")
@@ -45,10 +69,11 @@ FLAG_OWN_REALTY = st.radio("Possède un bien immobilier ?", [0, 1], index=int(or
 CNT_CHILDREN = st.number_input("Nombre d'enfants", min_value=0, max_value=3, step=1, value=int(original_data["CNT_CHILDREN"].values[0]))
 CNT_FAM_MEMBERS = st.number_input("Nombre de membres dans la famille", min_value=1, max_value=20, step=1, value=int(original_data["CNT_FAM_MEMBERS"].values[0]))
 AGE = st.number_input("Âge", min_value=18, max_value=100, value=int(original_data["AGE"].values[0]))
-FAMILY_STATUS = st.selectbox("Statut familial", [
-    "Married", "Single / not married", "Widow"])
-HOUSING_TYPE = st.selectbox("Type de logement", [
-    "House / apartment", "Rented apartment", "With parents", "Office apartment"])
+# Statut familial
+family_status = display_one_hot_selectbox(row, "NAME_FAMILY_STATUS_", "Statut familial")
+# Type de logement
+housing = display_one_hot_selectbox(row, "NAME_HOUSING_TYPE_", "Type de logement")
+
 
 st.markdown("## 💰 Revenus & Crédit")
 AMT_INCOME_TOTAL = st.number_input("Revenu total", min_value=0.0, value=float(original_data["AMT_INCOME_TOTAL"].values[0]))
@@ -59,7 +84,8 @@ INCOME_PER_PERSON = st.number_input("Revenu par personne", min_value=0.0, value=
 ANNUITY_INCOME_PERC = st.number_input("Annuité / Revenu", min_value=0.0, value=float(original_data["ANNUITY_INCOME_PERC"].values[0]))
 PAYMENT_RATE = st.number_input("Taux de paiement", min_value=0.0, value=float(original_data["PAYMENT_RATE"].values[0]))
 CREDIT_TERM = st.number_input("Durée du crédit", min_value=0.0, value=float(original_data["CREDIT_TERM"].values[0]))
-contract_type = st.selectbox("Type de contrat", ["Revolving loans", "Cash loans"])
+contract_type=display_one_hot_selectbox(row,"NAME_CONTRACT_TYPE_","Type de contrat")
+
 
 st.markdown("## 🏙️ Région")
 st.markdown(
@@ -232,18 +258,14 @@ st.markdown(
 DAYS_EMPLOYED_PERC = st.number_input("Jours employés en %", value=float(original_data['DAYS_EMPLOYED_PERC'].values[0]))
 
 st.markdown("## 💼 Informations professionnelles")
-income_type = st.selectbox("Type de revenu", [
-    "Working", "State servant", "Commercial associate", "Pensioner", "Unemployed"])
-
-education_type = st.selectbox("Niveau d'éducation", [
-    "Secondary / secondary special", "Higher education", "Lower secondary"])
-
-sector = st.selectbox("Secteur d’activité", [
-    "Industry", "Trade", "Transport", "Business Entity", "Government", "Security", "Services", 
-    "Construction", "Medicine", "Police", "Other"])
-
-occupation = st.selectbox("Profession", [
-    "Labor_Work", "Sales_Services", "Medical_Staff", "Security", "Management_Core", "Other"])
+# Type de revenu
+income_type=display_one_hot_selectbox(row,"NAME_INCOME_TYPE_","Type de revenu")
+# Education
+education_type=display_one_hot_selectbox(row,"NAME_EDUCATION_TYPE_","Niveau d'éducation")
+# Secteur
+sector = display_one_hot_selectbox(row, "SECTOR_", "Secteur d'activité")
+#Profession
+occupation = display_one_hot_selectbox(row,"OCCUPATION_","Profession")
 
 # Variables catégorielles à encoder manuellement (one-hot encoding)
 # Initialisation des colonnes avec 0
@@ -287,8 +309,8 @@ categorical_features = {
 categorical_features[f"NAME_CONTRACT_TYPE_{contract_type}"] = 1
 categorical_features[f"NAME_INCOME_TYPE_{income_type}"] = 1
 categorical_features[f"NAME_EDUCATION_TYPE_{education_type}"] = 1
-categorical_features[f"NAME_FAMILY_STATUS_{FAMILY_STATUS}"] = 1
-categorical_features[f"NAME_HOUSING_TYPE_{HOUSING_TYPE}"] = 1
+categorical_features[f"NAME_FAMILY_STATUS_{family_status}"] = 1
+categorical_features[f"NAME_HOUSING_TYPE_{housing}"] = 1
 categorical_features[f"SECTOR_{sector}"] = 1
 categorical_features[f"OCCUPATION_{occupation}"] = 1
 
