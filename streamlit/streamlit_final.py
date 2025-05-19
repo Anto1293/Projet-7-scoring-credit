@@ -63,7 +63,7 @@ def display_one_hot_selectbox(data_row, column_prefix, label):
 row = original_data.iloc[0]
 
 st.markdown("## 🧍 Informations personnelles")
-CODE_GENDER = st.radio("Sexe", [0, 1], index=int(original_data["CODE_GENDER"].values[0]), format_func=lambda x: "Femme" if x == 0 else "Homme")
+CODE_GENDER = st.radio("Sexe", [0, 1], index=int(original_data["CODE_GENDER"].values[0]), format_func=lambda x: "Homme" if x == 0 else "Femme")
 FLAG_OWN_CAR = st.radio("Possède une voiture ?", [0, 1], index=int(original_data["FLAG_OWN_CAR"].values[0]), format_func=lambda x: "Non" if x == 0 else "Oui")
 FLAG_OWN_REALTY = st.radio("Possède un bien immobilier ?", [0, 1], index=int(original_data["FLAG_OWN_REALTY"].values[0]), format_func=lambda x: "Non" if x == 0 else "Oui")
 CNT_CHILDREN = st.number_input("Nombre d'enfants", min_value=0, max_value=3, step=1, value=int(original_data["CNT_CHILDREN"].values[0]))

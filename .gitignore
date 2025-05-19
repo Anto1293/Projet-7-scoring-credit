@@ -39,3 +39,6 @@ model/*.pkl
 # Sauf ces deux fichiers spécifiques
 !model/best_model_lgbm.pkl
 !model/metrics_lgbm.pkl
+
+# SHAP V2 (pour projet 8)
+SHAP BDD V2/
