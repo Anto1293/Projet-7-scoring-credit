@@ -155,8 +155,8 @@ def predict(data: InputData):
         input_df = pd.DataFrame([data.model_dump(by_alias=True)])  # Correct avec Pydantic v2 au lieu de data.dict
         print("Colonnes envoyées au modèle :", input_df.columns.tolist())
         
-        # Utiliser le modèle pour prédire
-        prediction = model.predict(input_df)[0]
+        # Utiliser le modèle pour prédire la proba
+        proba = model.predict_proba(input_df)[0][1] 
         
         # Appliquer le seuil optimal pour dire accepté / refusé
         decision = "refusé" if prediction > 0.10 else "accepté"
