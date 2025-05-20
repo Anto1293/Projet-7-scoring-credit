@@ -147,22 +147,22 @@ class InputData(BaseModel):
     OCCUPATION_Other: float
 
 # Créer un endpoint POST /predict
-@app.post("/predict")
 
+@app.post("/predict")
 def predict(data: InputData):
     try:
         # Convertir l'input en DataFrame
-        input_df = pd.DataFrame([data.model_dump(by_alias=True)])  # Correct avec Pydantic v2 au lieu de data.dict
+        input_df = pd.DataFrame([data.model_dump(by_alias=True)])
         print("Colonnes envoyées au modèle :", input_df.columns.tolist())
         
-        # Utiliser le modèle pour prédire la proba
+        # Prédire la probabilité (classe 1 = défaut)
         proba = model.predict_proba(input_df)[0][1] 
         
-        # Appliquer le seuil optimal pour dire accepté / refusé
-        decision = "refusé" if prediction > 0.10 else "accepté"
+        # Appliquer le seuil 
+        decision = "refusé" if proba > 0.10 else "accepté"
         
         return {
-            "proba": round(float(prediction), 4),
+            "proba": round(float(proba), 4),
             "décision": decision
         }
     except Exception as e:
