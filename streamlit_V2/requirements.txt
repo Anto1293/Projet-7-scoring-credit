@@ -8,3 +8,4 @@ shap
 numpy
 matplotlib
 huggingface_hub
+seaborn
