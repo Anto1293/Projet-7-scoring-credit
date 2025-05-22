@@ -42,12 +42,10 @@ def get_input(col_name, input_widget):
 def display_one_hot_selectbox(data_row, column_prefix, label):
     """
     Affiche un selectbox Streamlit à partir de colonnes one-hot encodées.
-
     Args:
         data_row (pd.Series): Une ligne du DataFrame
         column_prefix (str): Préfixe des colonnes (ex: "NAME_FAMILY_STATUS_")
         label (str): Libellé du selectbox
-
     Returns:
         str: Valeur sélectionnée
     """
@@ -60,7 +58,6 @@ def display_one_hot_selectbox(data_row, column_prefix, label):
     default_value = default_col.replace(column_prefix, "") if default_col else options[0]
     # Afficher le selectbox
     return st.selectbox(label, options=options, index=options.index(default_value))
-row = original_data.iloc[0]
 
 st.markdown("## 🧍 Informations personnelles")
 CODE_GENDER = st.radio("Sexe", [0, 1], index=int(original_data["CODE_GENDER"].values[0]), format_func=lambda x: "Homme" if x == 0 else "Femme")
@@ -70,10 +67,10 @@ CNT_CHILDREN = st.number_input("Nombre d'enfants", min_value=0, max_value=3, ste
 CNT_FAM_MEMBERS = st.number_input("Nombre de membres dans la famille", min_value=1, max_value=20, step=1, value=int(original_data["CNT_FAM_MEMBERS"].values[0]))
 AGE = st.number_input("Âge", min_value=18, max_value=100, value=int(original_data["AGE"].values[0]))
 # Statut familial
+row = original_data.iloc[0]
 family_status = display_one_hot_selectbox(row, "NAME_FAMILY_STATUS_", "Statut familial")
 # Type de logement
 housing = display_one_hot_selectbox(row, "NAME_HOUSING_TYPE_", "Type de logement")
-
 
 st.markdown("## 💰 Revenus & Crédit")
 AMT_INCOME_TOTAL = st.number_input("Revenu total", min_value=0.0, value=float(original_data["AMT_INCOME_TOTAL"].values[0]))
@@ -85,7 +82,6 @@ ANNUITY_INCOME_PERC = st.number_input("Annuité / Revenu", min_value=0.0, value=
 PAYMENT_RATE = st.number_input("Taux de paiement", min_value=0.0, value=float(original_data["PAYMENT_RATE"].values[0]))
 CREDIT_TERM = st.number_input("Durée du crédit", min_value=0.0, value=float(original_data["CREDIT_TERM"].values[0]))
 contract_type=display_one_hot_selectbox(row,"NAME_CONTRACT_TYPE_","Type de contrat")
-
 
 st.markdown("## 🏙️ Région")
 st.markdown(

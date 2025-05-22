@@ -41,4 +41,4 @@ Cette interface Streamlit V2 a été développée pour permettre une interpréta
 ---
 
 ## 🌐 Déploiement sur Render
-Lien vers l'interface en ligne: []
+Lien vers l'interface en ligne: [https://projet-7-interface-version2.onrender.com]
