@@ -1,0 +1,22 @@
+/* Appliquer à tout le corps de l'application 
+CSS signifie Cascading Style Sheets = langage de style utilisé pour personnaliser l'apparence d'une interface Web (ici, ton app Streamlit)*/
+
+body {
+    font-size: 16px !important;    /* Taille de base lisible */
+    color: #111 !important;        /* Texte sombre pour bon contraste */
+    background-color: #fff !important;  /* Fond clair */
+}
+
+/* Titres et markdown Streamlit */
+h1, h2, h3, .stMarkdown {
+    font-weight: bold;  /* Texte bien visible */
+}
+
+/* Boutons plus visibles */
+.stButton > button {
+    background-color: #005A9C !important;  /* Bleu foncé (bon contraste) */
+    color: white !important;               /* Texte blanc lisible */
+    font-weight: bold;
+    border-radius: 8px;                    /* Coins arrondis, esthétique */
+}
+
