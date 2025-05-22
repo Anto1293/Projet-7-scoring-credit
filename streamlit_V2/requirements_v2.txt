@@ -1,0 +1,10 @@
+streamlit
+pandas
+requests
+streamlit-extras
+streamlit-option-menu
+plotly
+shap
+numpy
+matplotlib
+huggingface_hub
