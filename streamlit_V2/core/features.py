@@ -1,6 +1,20 @@
 # features.py
 
 import pandas as pd
+import json
+import os
+
+def load_variable_mapping(path=None):
+    if path is None:
+        path = os.path.join(os.path.dirname(__file__), "variables_mapping.json")
+    with open(path, "r") as f:
+        return json.load(f)
+
+VARIABLE_MAPPING = load_variable_mapping()
+
+def rename_variable(var_name):
+    return VARIABLE_MAPPING.get(var_name, var_name)
+
 
 # Chargement des ressources distantes
 DATA_LOCAL = "https://huggingface.co/datasets/Antonine93/projet7scoring/resolve/main/shap_values_clients.parquet"
@@ -28,23 +42,19 @@ NUMERICAL_FEATURES = ["CNT_CHILDREN", "AGE", "AMT_INCOME_TOTAL", "AMT_CREDIT", "
     "PREV_DAYS_DECISION_MIN", "POS_SK_DPD_MEAN", "POS_SK_DPD_DEF_MEAN", "INSTAL_PAYMENT_DIFF_MEAN", "INSTAL_PAYMENT_DIFF_MAX",
     "INSTAL_DPD_MEAN", "CC_AMT_BALANCE_MEAN", "CC_AMT_PAYMENT_TOTAL_CURRENT_MEAN", "CC_SK_DPD_MAX", "DAYS_EMPLOYED_PERC"]
 
-BINARY_FEATURES = ["CODE_GENDER", "FLAG_OWN_CAR", "FLAG_OWN_REALTY"]
+BINARY_FEATURES = ["CODE_GENDER", "FLAG_OWN_CAR", "FLAG_OWN_REALTY","NAME_CONTRACT_TYPE_Revolving loans"]
 
-OHE_FEATURES = [
-    "NAME_CONTRACT_TYPE", "NAME_INCOME_TYPE", "NAME_EDUCATION_TYPE",
-    "NAME_FAMILY_STATUS", "NAME_HOUSING_TYPE", "OCCUPATION", "SECTOR"
-]
+OHE_FEATURES = ["NAME_INCOME_TYPE", "NAME_EDUCATION_TYPE",
+    "NAME_FAMILY_STATUS", "NAME_HOUSING_TYPE", "OCCUPATION", "SECTOR"]
 
 # Mapping pour retrouver les préfixes OHE (ex: "NAME_FAMILY_STATUS_" etc.)
 OHE_MAPPING = {
-    "NAME_CONTRACT_TYPE": "NAME_CONTRACT_TYPE_",
     "NAME_INCOME_TYPE": "NAME_INCOME_TYPE_",
     "NAME_EDUCATION_TYPE": "NAME_EDUCATION_TYPE_",
     "NAME_FAMILY_STATUS": "NAME_FAMILY_STATUS_",
     "NAME_HOUSING_TYPE": "NAME_HOUSING_TYPE_",
     "OCCUPATION": "OCCUPATION_",
-    "SECTOR": "SECTOR_"
-}
+    "SECTOR": "SECTOR_"}
 
 # Mapping pour onglet simulation
 
@@ -53,7 +63,7 @@ FEATURE_GROUPS = {
     "🚗 Possessions": ["FLAG_OWN_CAR", "FLAG_OWN_REALTY"],
     "💼 Emploi & revenus": ["AMT_INCOME_TOTAL", "INCOME_PER_PERSON", "NAME_INCOME_TYPE", "OCCUPATION", "SECTOR", "DAYS_EMPLOYED_PERC"],
     "🏠 Région & Logement": ["REGION_POPULATION_RELATIVE", "REGION_RATING_CLIENT_W_CITY", "YEARS_BUILD_AVG", "TOTALAREA_MODE"],
-    "💳 Crédit et historiques de crédit": ["AMT_CREDIT", "AMT_ANNUITY", "AMT_GOODS_PRICE", "NAME_CONTRACT_TYPE", "ANNUITY_INCOME_PERC", "PAYMENT_RATE", "CREDIT_TERM",
+    "💳 Crédit et historiques de crédit": ["AMT_CREDIT", "AMT_ANNUITY", "AMT_GOODS_PRICE", "NAME_CONTRACT_TYPE_Revolving loans", "ANNUITY_INCOME_PERC", "PAYMENT_RATE", "CREDIT_TERM",
                                          "BURO_DAYS_CREDIT_MEAN", "BURO_AMT_CREDIT_SUM_MEAN", "BURO_AMT_CREDIT_SUM_OVERDUE_MEAN", "BURO_CREDIT_DAY_OVERDUE_MEAN", "PREV_AMT_CREDIT_MAX",
                                           "PREV_AMT_APPLICATION_MEAN", "PREV_APP_CREDIT_PERC_MEAN", "PREV_DAYS_DECISION_MIN", "POS_SK_DPD_MEAN", "POS_SK_DPD_DEF_MEAN", 
                                           "INSTAL_PAYMENT_DIFF_MEAN", "INSTAL_PAYMENT_DIFF_MAX","INSTAL_DPD_MEAN"],
