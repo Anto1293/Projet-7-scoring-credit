@@ -6,6 +6,7 @@ from core.inputs import display_grouped_inputs, build_data_for_api
 from api.endpoints import get_prediction, get_client_data, get_all_client_ids
 from core.predictions_utils import display_one_hot_selectbox
 from core.features import rename_variable
+import json
 
 st.title("🧪 Simulation de Scénarios de Crédit")
 

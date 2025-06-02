@@ -8,6 +8,7 @@ from core.features import shap_global
 from api.endpoints import get_all_client_ids, get_client_data, get_prediction
 from core.shap_utils import get_client_index, get_shap_explanation, get_top_features
 from core.features import rename_variable
+import json
 
 st.subheader("Vue Client")
 
