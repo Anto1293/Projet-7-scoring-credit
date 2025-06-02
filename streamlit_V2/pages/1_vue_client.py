@@ -7,6 +7,8 @@ import shap
 from core.features import shap_global
 from api.endpoints import get_all_client_ids, get_client_data, get_prediction
 from core.shap_utils import get_client_index, get_shap_explanation, get_top_features
+from core.features import rename_variable
+import json
 
 st.subheader("Vue Client")
 
@@ -41,12 +43,9 @@ st.plotly_chart(fig, use_container_width=True)
 top_features = get_top_features(shap_global, top_n=8)
 client_df = pd.DataFrame([client_data]).T.rename(columns={0: "Valeur"})
 filtered_df = client_df.loc[top_features]
-st.markdown("### Variables clés du client")
+filtered_df.index = [rename_variable(name) for name in filtered_df.index]  # noms lisibles
+st.markdown("### Variables clés du client (importance globale)")
 st.dataframe(filtered_df)
-
-# Palette daltonien-friendly
-color_positive = "#E69F00"  # orange
-color_negative = "#56B4E9"  # bleu clair
 
 # --- SHAP local (waterfall) ---
 st.markdown("### Explication SHAP locale")
@@ -56,3 +55,4 @@ shap_exp = get_shap_explanation(client_idx, client_data)
 fig, ax = plt.subplots(figsize=(10, 5))
 shap.plots.waterfall(shap_exp, show=False)
 st.pyplot(fig)
+

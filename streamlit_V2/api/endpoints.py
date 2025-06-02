@@ -1,6 +1,7 @@
 # ----- Fonctions API -----
 
 import requests
+import json
 
 #API endpoint
 API_URL = "https://projet-7-scoring-credit.onrender.com"

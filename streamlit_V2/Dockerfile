@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-WORKDIR /streamlit_V2
+WORKDIR /streamlit_v2
 
 # Copie tous les fichiers 
 COPY . .

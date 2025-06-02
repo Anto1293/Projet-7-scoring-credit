@@ -46,6 +46,13 @@ Les fichiers de données proviennent du dataset Home Credit Default Risk :
 │   ├── streamlit_app.py          # Interface utilisateur
 │   └── Dockerfile
 
+├── streamlit_V2/
+│   ├── pages                    # page 1, page 2, page 3 et page 4
+│   ├── api                      # endpoints api
+│   ├── core                     # fonctions
+│   ├── interface_v2.py          # Interface utilisateur version améliorée (Projet 8)
+│   └── Dockerfile
+
 ├── mlflow/
 │   └── Dockerfile
 │   └── artifacts/
@@ -91,10 +98,13 @@ pytest -s tests/
 ## Dépendances
 Voir requirements.txt ou environment.yml
 
-## ☁️ Déploiement cloud
+## Déploiement cloud
 L’API est déployée sur [https://projet-7-scoring-credit.onrender.com]
 Streamlit est accessible sur [https://projet-7-scoring-credit-interface.onrender.com]
 
-## 📦 Docker Compose
+## Docker Compose
 docker-compose up --build
 Cela lance : L'API (FastAPI), MLflow pour le suivi et l'application Streamlit
+
+## Mise à jour
+Interface streamlit version 2 accessible sur [https://projet-7-interface-version2.onrender.com]

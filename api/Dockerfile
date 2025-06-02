@@ -1,4 +1,5 @@
-# Docker est une technologie qui permet de créer des "conteneurs" pour exécuter des applications de manière isolée. Cela garantit que l'application fonctionnera de la même manière, peu importe l'environnement où elle est déployée 
+# Docker est une technologie qui permet de créer des "conteneurs" pour exécuter des applications de manière isolée. 
+# Cela garantit que l'application fonctionnera de la même manière, peu importe l'environnement où elle est déployée 
 
 # API/Dockerfile
 
