@@ -1,4 +1,5 @@
 import streamlit as st
+from core.features import rename_variable 
 
 # Fonction pour récupérer les valeurs OHE
 def display_one_hot_selectbox(data_row, column_prefix, label):
@@ -19,5 +20,7 @@ def display_one_hot_selectbox(data_row, column_prefix, label):
     default_col = next((col for col in matching_columns if data_row[col] == 1), None)
     # Valeur par défaut sélectionnée dans la liste
     default_value = default_col.replace(column_prefix, "") if default_col else options[0]
+    # Renommer le label technique pour l'affichage
+    readable_label = rename_variable(column_prefix.rstrip("_"))
     # Afficher le selectbox
-    return st.selectbox(label, options=options, index=options.index(default_value))
+    return st.selectbox(readable_label, options=options, index=options.index(default_value))

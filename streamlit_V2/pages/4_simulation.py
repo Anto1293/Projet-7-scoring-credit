@@ -8,7 +8,7 @@ from core.predictions_utils import display_one_hot_selectbox
 from core.features import rename_variable
 import json
 
-st.title("🧪 Simulation de Scénarios de Crédit")
+st.title("📋 Simulation de Scénarios de Crédit")
 
 # Sélection de l'ID client
 client_ids = get_all_client_ids()
