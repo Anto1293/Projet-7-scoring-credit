@@ -8,9 +8,12 @@ st.title("🗂️ Bienvenue sur le tableau de bord scoring client")
 st.write(
     """
     Guide d'utilisateur :
-    - Page 1 : 👤 Interface client (feature importance locale)
-    - Page 2 : 🌍 Interface globale (feature importance globale)
+    - Page 1 : 👤 Interface client
+
+    - Page 2 : 🌍 Interface globale 
+  
     - Page 3 : 📊 Graphiques comparatifs
+               
     - Page 4 : 📋 Interface de simulation
     """
 )
