@@ -150,8 +150,11 @@ elif not is_x_num and is_y_num:
     df_plot = df_all_clients.copy()
     df_plot["x_vals"] = x_vals
 
+    # Calcul de la moyenne de y_feature par catégorie x_feature
+    df_mean = df_plot.groupby("x_vals")[y_feature].mean().reset_index()
+
     fig3 = px.bar(
-        df_plot,
+        df_mean,
         x="x_vals",
         y=y_feature,
         color="x_vals",
@@ -160,20 +163,24 @@ elif not is_x_num and is_y_num:
         title=f"Moyenne de {rename_variable(y_feature)} par {rename_variable(x_feature)}"
     )
 
+    # Point du client
     client_x_val = str(apply_labels(client_data.to_frame().T, x_feature).values[0])
-
     fig3.add_trace(go.Scatter(
         x=[client_x_val], y=[client_data[y_feature]], mode='markers',
         name='Client', marker=dict(color=client_color, size=14, line=dict(color='white', width=1.5))
     ))
+
 
 elif is_x_num and not is_y_num:
     y_vals = apply_labels(df_all_clients, y_feature)
     df_plot = df_all_clients.copy()
     df_plot["y_vals"] = y_vals
 
+    # Calcul de la moyenne de x_feature par catégorie y_feature
+    df_mean = df_plot.groupby("y_vals")[x_feature].mean().reset_index()
+
     fig3 = px.bar(
-        df_plot,
+        df_mean,
         y="y_vals",
         x=x_feature,
         color="y_vals",
@@ -183,6 +190,7 @@ elif is_x_num and not is_y_num:
         title=f"Moyenne de {rename_variable(x_feature)} par {rename_variable(y_feature)}"
     )
 
+    # Point du client
     client_y_val = str(apply_labels(client_data.to_frame().T, y_feature).values[0])
     fig3.add_trace(go.Scatter(
         y=[client_y_val], x=[client_data[x_feature]], mode='markers',
